@@ -39,6 +39,13 @@ team_t team = {
 
 /* rounds up to the nearest multiple of ALIGNMENT */
 #define ALIGN(size) (((size) + (ALIGNMENT - 1)) & ~0x7)
+/*
+블록은 항상 더블워드 정렬을 따른다.
+4바이트 정수가 4바이트 경계에 정렬되어있으면 한번의 연산으로 가능
+하지만 정렬되어있지 않은 경우 최소 2번 이상의 메모리 접근을 통해 데이터를 읽어야한다.
+블록 사이즈는 항상 8의 배수이기 때문에 마지막 세 비트는 원하는 대로 사용할 수 있다. 
+나중에 블록의 헤더로부터 사이즈를 알아내야 할 때 끝 세자리를 0으로 바꿔주는 연산을 수행하면 되기 때문이다. 
+*/
 
 #define SIZE_T_SIZE (ALIGN(sizeof(size_t)))
 
